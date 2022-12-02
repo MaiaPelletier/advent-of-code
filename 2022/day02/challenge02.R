@@ -6,15 +6,9 @@ library(purrr)
 
 # function to convert letters to choice value
 rps_to_number <- function(choice) {
-  
-  if (choice %in% c("A", "X")) {
-    return(1)
-  } else if (choice %in% c("B", "Y")) {
-    return(2)
-  } else {
-    return(3)
-  }
-  
+  if (choice %in% c("A", "X")) return(1)
+  else if (choice %in% c("B", "Y")) return(2)
+  else return(3)
 }
 
 
@@ -33,6 +27,7 @@ lose <- function(opp) {
   else return(2)
 }
 
+
 # read input as a data.frame
 input <-
   read.delim(
@@ -41,6 +36,7 @@ input <-
     header = FALSE,
     col.names = c("opp", "resp")
   )
+
 
 # solution 1 = 13565
 input %>% 
@@ -56,6 +52,7 @@ input %>%
   ) %>% 
   transmute(round_score = resp + outcome) %>% 
   summarise(total = sum(round_score))
+
 
 # solution 2 = 1242
 input %>% 
