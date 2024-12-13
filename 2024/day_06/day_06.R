@@ -2,7 +2,7 @@
 library(stringr)
 
 # Read puzzle input
-input <- here::here("2024", "day_06", "input.txt")
+input <- here::here("2024", "day_06", "example.txt")
 input <- readr::read_lines(input)
 
 # Part 1 ----
@@ -45,10 +45,6 @@ count_spaces <- function(path) {
   length(path) - 2 # Subtract 2 for current pos and obstacle
 }
 
-update_position_matrix <- function(rows, cols) {
-  pos_matrix[rows, cols] <- "X"
-}
-
 # Initialize ----
 guard <- "\\^" # Starting guard orientation
 pos_matrix <- grid_matrix # To update the guard's traveled positions on the grid
@@ -56,7 +52,6 @@ row <- find_guard(grid_list, guard) # Initial guard row
 col <- find_guard(grid_list[[row]], guard) # Initial guard col
 off_grid <- FALSE # Loop flag
 pos_matrix[row, col] <- "X" # Mark starting position on position tracker
-rotations <- 0 # Loop counter
 
 
 while (!off_grid) {
@@ -68,7 +63,6 @@ while (!off_grid) {
       spaces_to_move <- count_spaces(guard_path[stop:row])
       pos_matrix[(row - spaces_to_move):row, col] <- "X"
       row <- row - spaces_to_move
-      rotations <- rotations + 1
       guard <- ">"
     } else {
       pos_matrix[1:row, col] <- "X"
@@ -82,7 +76,6 @@ while (!off_grid) {
       spaces_to_move <- count_spaces(guard_path[1:stop])
       pos_matrix[row, (col:(col + spaces_to_move))] <- "X"
       col <- col + spaces_to_move
-      rotations <- rotations + 1
       guard <- "v"
     } else {
       pos_matrix[row, col:grid_size] <- "X"
@@ -95,7 +88,6 @@ while (!off_grid) {
       spaces_to_move <- count_spaces(guard_path[1:stop])
       pos_matrix[(row:(row + spaces_to_move)), col] <- "X"
       row <- row + spaces_to_move
-      rotations <- rotations + 1
       guard <- "<"
     } else {
       pos_matrix[row:grid_size, col] <- "X"
@@ -108,7 +100,6 @@ while (!off_grid) {
       spaces_to_move <- count_spaces(guard_path[stop:col])
       pos_matrix[row, (col - spaces_to_move):col] <- "X"
       col <- col - spaces_to_move
-      rotations <- rotations + 1
       guard <- "\\^"
     } else {
       pos_matrix[row, 1:col] <- "X"
@@ -117,8 +108,5 @@ while (!off_grid) {
   }
 }
 
-print(rotations)
 sum(as.vector(pos_matrix) == "X")
-# Ans = 4977
-
 
