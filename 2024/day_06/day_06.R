@@ -2,7 +2,7 @@
 library(stringr)
 
 # Read puzzle input
-input <- here::here("2024", "day_06", "example.txt")
+input <- here::here("2024", "day_06", "input.txt")
 input <- readr::read_lines(input)
 
 # Part 1 ----
