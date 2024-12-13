@@ -4,3 +4,7 @@
 .Ruserdata
 *.Rproj
 .idea
+.vscode
+
+# Rmarkdown readmes
+2024/day_06/README.Rmd
